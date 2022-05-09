@@ -1,6 +1,15 @@
 import './style.css';
 
-import { of, map, concat, combineLatest, Observable, Observer } from 'rxjs';
+import {
+  of,
+  map,
+  concat,
+  pipe,
+  combineLatest,
+  Observable,
+  Observer,
+} from 'rxjs';
+import { ajax } from 'rxjs/ajax';
 
 //of('World', 'LKF')
 //  .pipe(map((name) => `Hello, ${name}!`))
@@ -25,8 +34,8 @@ class CachedImageLoader {
       observer.next('image from network');
       observer.complete();
     });
-    concat(local$, network$).subscribe((x, y) => {
-      console.log(x, y);
+    concat(local$, network$).subscribe((x) => {
+      console.log(x);
     });
   }
 }
@@ -35,3 +44,8 @@ var key = `IMG001`;
 var loader = new CachedImageLoader();
 loader.load_image(key);
 loader.load_image(key);
+
+ajax('https://timing-sense-score-board.herokuapp.com/score/25').pipe((res) => {
+  //console.log(res.response.rank);
+  console.log(res);
+});
